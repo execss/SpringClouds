@@ -4,22 +4,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-!**/.md
-!**/pom.xml
-!**/src/main/**
-
-**/mvnw
-**/mvnw.cmd
-**/.mvn/**/**
-**/src/main/**/target/
-**/src/test/**/target/
-
-.idea
-.vscode
-*.iml
-*.suo
-*.ntvs*
-*.njsproj
 ### STS ###
 .apt_generated
 .classpath

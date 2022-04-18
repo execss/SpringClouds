@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+top.byteinfo.blog.common.redis.config.RedisConfigure,\
+top.byteinfo.blog.common.redis.redisTemplate.RedisClient
