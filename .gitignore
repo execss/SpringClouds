@@ -1,8 +1,5 @@
 HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
 !**/.md
 !**/pom.xml
@@ -47,3 +44,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/cd-blog-mbg/.gitignore
