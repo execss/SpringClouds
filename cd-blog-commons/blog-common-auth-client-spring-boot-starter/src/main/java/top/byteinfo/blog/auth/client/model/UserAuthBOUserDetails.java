@@ -1,4 +1,4 @@
-package top.byteinfo.blog.common.core.model.bo;
+package top.byteinfo.blog.auth.client.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

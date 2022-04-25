@@ -8,9 +8,25 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-public  class JacksonUtils {
+public  class Jackson {
 	private static ObjectMapper objectMapper = new ObjectMapper();
 
+	public static String toString(Object value) {
+		try {
+			return objectMapper.writeValueAsString(value);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+	public static byte[] toBytes(Object value) {
+		try {
+			return objectMapper.writeValueAsBytes(value);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return new byte[]{};
+		}
+	}
 	public static String writeValueAsString(Object value) {
 		try {
 			return objectMapper.writeValueAsString(value);
@@ -19,6 +35,15 @@ public  class JacksonUtils {
 			return "";
 		}
 	}
+	public static byte[] writeValueAsBytes(Object value) {
+		try {
+			return objectMapper.writeValueAsBytes(value);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return new byte[]{};
+		}
+	}
+
 
 	public static <T> T readValue(String content, Class<T> valueType) {
 		try {
@@ -50,4 +75,6 @@ public  class JacksonUtils {
 	public static <T> T convertValue(Object fromValue, Class<T> toValueType) {
 		return objectMapper.convertValue(fromValue, toValueType);
 	}
+
+
 }

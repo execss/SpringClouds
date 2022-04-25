@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/admin/**",
                         "/auth/**",
                         "/token",
-                        "/**"
+                        "/test"
                 ).permitAll()
                 .antMatchers("/doc.html",
                 "/swagger-ui/*"

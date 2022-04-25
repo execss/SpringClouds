@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JwtTokenUtils {
-    private static final Logger log = LoggerFactory.getLogger(JwtTokenUtils.class);
+public class TokenUtil {
+    private static final Logger log = LoggerFactory.getLogger(TokenUtil.class);
 
 
     public static class JwtTokenBuilder {

@@ -1,11 +1,14 @@
 package top.byteinfo.blog.restApi;
 
+import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.byteinfo.blog.config.JwtConfigProperties;
 import top.byteinfo.blog.mbg.entity.Role;
 import top.byteinfo.blog.mbg.entity.RoleAuthority;
 import top.byteinfo.blog.mbg.entity.UserAuth;
@@ -20,6 +23,7 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -33,9 +37,12 @@ public class LoginApi {
     @Resource
     private RoleAuthorityMapper roleAuthorityMapper;
 
+    @Autowired
+    private JwtConfigProperties jwtKeys;
+
 
     @PostMapping("/auth/login")
-    public Result<?> login(@RequestParam String username, @RequestParam String password) {
+    public Result<?> login(@RequestParam String username, @RequestParam String password) throws Exception {
 
         UserAuth userAuth = userAuthMapper.getUserAuthByName(username);
         // TODO  entity Valid
@@ -44,22 +51,21 @@ public class LoginApi {
         }
         Role role = roleMapper.getRoleByAuthId(userAuth.getId());
 
+
         List<RoleAuthority> roleAuthorityList = roleAuthorityMapper.getRoleAuthorityByRoleId(role.getId());
 
-        HashMap payloadClaimsMap = new HashMap<>();
-        payloadClaimsMap.put("username",username);
 
         String token = JwtTokenUtils.tokenBuilder()
-                .issuer("LoginApi:login")
-                .subject("Authentication")
-                .ExpiresAt(new Date(2022, 04, 21, 17, 35))
+                .issuer("auth/role")
+                .subject("auth")
+                .ExpiresAt(DateUtils.addDays(new Date(),1))
                 .audience(roleAuthorityList.stream()
                         .map(RoleAuthority::getAuthorityType).toArray(String[]::new))
-                .JWTId("1")
-                .secret("auth/role")
-                .claim("claimK","claimV")
-                .payloadClaims(payloadClaimsMap)
+                .JWTId(UUID.randomUUID().toString().split("-")[0])
+                .secret(jwtKeys.getTokenKey())
+                .claim("K","V")
                 .build();
+
         UserAuthBOUserDetails userAuthBOUserDetails = UserAuthBOUserDetails.builder()
                 .username(username)
                 .enabled(true)
@@ -78,7 +84,6 @@ public class LoginApi {
 
         HashMap map =new HashMap<>();
         map.put("token",token);
-
 
         return Result.ok("login successful",map );
     }

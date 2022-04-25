@@ -69,7 +69,7 @@
         </javaClientGenerator>
 
 
-        <table schema="cd_blog" tableName="%">
+        <table schema="cd_blog" tableName="bl_comment">
             <domainObjectRenamingRule searchString="^Bl" replaceString=""/>
         </table>
 

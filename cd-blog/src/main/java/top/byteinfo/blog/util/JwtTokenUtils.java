@@ -6,7 +6,11 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,9 +75,9 @@ public class JwtTokenUtils {
             return this;
         }
 
-        public JwtTokenBuilder claim(final String claimK,final String claimV) {
+        public JwtTokenBuilder claim(final String claimK, final String claimV) {
             this.claimK = claimK;
-            this.claimV=claimV;
+            this.claimV = claimV;
             return this;
         }
 
@@ -87,97 +91,87 @@ public class JwtTokenUtils {
 //            return generateToken(this.issuer,this.ExpiresAt,this.subject,this.audience,this.NotBefore,this.IssuedAt,this.JWTId,this.claim,this.payloadClaims
 //            );
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.create()
-                    .withIssuer(issuer)//签发者
+            return JWT.create().withIssuer(issuer)//签发者
                     .withExpiresAt(ExpiresAt)//过期时间
                     .withSubject(subject) //主题 签发对象
                     .withAudience(audience)// String 数组 compareTo withPayload()
-                    .withNotBefore(NotBefore)
-                    .withIssuedAt(IssuedAt)
-                    .withJWTId(JWTId)// token id
+                    .withNotBefore(NotBefore).withIssuedAt(IssuedAt).withJWTId(JWTId)// token id
                     .withClaim(claimK, claimV)//assertNonNull(name) TODO refer redis or mongodb
-                    .withClaim("admin", 123456)
-                    .withPayload(payloadClaims)
-                    .sign(algorithm);
+                    .withClaim("admin", 123456).withPayload(payloadClaims).sign(algorithm);
         }
     }
 
-public static class JwtVerifierBuilder{
-    String secret;
-    String issuer;
-    Date ExpiresAt;
-    String subject;
-    String[] audience;
-    Date NotBefore;
-    Date IssuedAt;
-    String JWTId;
-    String claimK;
-    String claimV;
-    Long number;
-    Map payloadClaims;
-    JwtVerifierBuilder(){
+    public static class JwtVerifierBuilder {
+        String secret;
+        String issuer;
+        Date ExpiresAt;
+        String subject;
+        String[] audience;
+        Date NotBefore;
+        Date IssuedAt;
+        String JWTId;
+        String claimK;
+        String claimV;
+        Long number;
+        Map payloadClaims;
 
-    }
-    public JwtVerifierBuilder secret(final String secret) {
-        this.secret = secret;
-        return this;
-    }
+        JwtVerifierBuilder() {
 
-    public JwtVerifierBuilder issuer(final String issuer) {
-        this.issuer = issuer;
-        return this;
-    }
+        }
 
+        public JwtVerifierBuilder secret(final String secret) {
+            this.secret = secret;
+            return this;
+        }
 
-
-    public JwtVerifierBuilder subject(final String subject) {
-        this.subject = subject;
-        return this;
-    }
-
-    public JwtVerifierBuilder audience(final String... audience) {
-        this.audience = audience;
-        return this;
-    }
+        public JwtVerifierBuilder issuer(final String issuer) {
+            this.issuer = issuer;
+            return this;
+        }
 
 
+        public JwtVerifierBuilder subject(final String subject) {
+            this.subject = subject;
+            return this;
+        }
 
-    public JwtVerifierBuilder JWTId(final String JWTId) {
-        this.JWTId = JWTId;
-        return this;
-    }
+        public JwtVerifierBuilder audience(final String... audience) {
+            this.audience = audience;
+            return this;
+        }
 
-    public JwtVerifierBuilder claim(final String claimK,final String claimV) {
-        this.claimK = claimK;
-        this.claimV= claimV;
-        return this;
-    }
 
-    public JwtVerifierBuilder payloadClaims(final Map payloadClaims) {
-        this.payloadClaims = payloadClaims;
-        return this;
-    }
+        public JwtVerifierBuilder JWTId(final String JWTId) {
+            this.JWTId = JWTId;
+            return this;
+        }
 
-    public JWTVerifier build() {
-        Algorithm algorithm = Algorithm.HMAC256(secret);
-        JWTVerifier verifier = JWT.require(algorithm)
-                .withIssuer(issuer)
-                .withSubject(subject)
-                .withAudience(audience)
-                .withJWTId(JWTId)
-                //TODO advanced application
+        public JwtVerifierBuilder claim(final String claimK, final String claimV) {
+            this.claimK = claimK;
+            this.claimV = claimV;
+            return this;
+        }
+
+        public JwtVerifierBuilder payloadClaims(final Map payloadClaims) {
+            this.payloadClaims = payloadClaims;
+            return this;
+        }
+
+        public JWTVerifier build() {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).withSubject(subject).withAudience(audience).withJWTId(JWTId)
+                    //TODO advanced application
 //                .acceptExpiresAt(number)
 //                .acceptIssuedAt(number)
 //                .acceptLeeway(number)
 //                .acceptNotBefore(number)
 //                .ignoreIssuedAt()
-                // TODO
-                .withClaim(claimK, claimV)
-                .withClaim("admin", 123456)
-                .build(); //Reusable verifier instance
-        return verifier;
+                    // TODO
+                    .withClaim(claimK, claimV).withClaim("admin", 123456).build(); //Reusable verifier instance
+            return verifier;
+        }
     }
-}
+
     public static JwtVerifierBuilder verifierBuilder() {
         return new JwtVerifierBuilder();
     }
@@ -185,7 +179,6 @@ public static class JwtVerifierBuilder{
     public static JwtTokenBuilder tokenBuilder() {
         return new JwtTokenBuilder();
     }
-
 
 
 //    public static String generateToken(
@@ -227,37 +220,24 @@ public static class JwtVerifierBuilder{
         //        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(base64Security);
         //        Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
         Date date = new Date();
-        String token = JWT.create()
-                .withIssuer("auth0")
-                .withExpiresAt(new Date(2022, 04, 19, 00, 00))
-                .withSubject("spring security")
-                .withAudience("admin")
-                .withNotBefore(date)
-                .withIssuedAt(date)
-                .withJWTId(ApiMethod)
-                .withClaim("name", 123)
-                .sign(algorithm);
+        String token = JWT.create().withIssuer("auth0").withExpiresAt(new Date(2022, 04, 19, 00, 00)).withSubject("spring security").withAudience("admin").withNotBefore(date).withIssuedAt(date).withJWTId(ApiMethod).withClaim("name", 123).sign(algorithm);
         return token;
     }
 
 
-    public static Boolean verifyToken(String token,String ApiMethod) {
+    public static Boolean verifyToken(String token, String ApiMethod) {
         Boolean b = null;
-            Algorithm algorithm = Algorithm.HMAC256("secret");
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer("auth0")
-                    .withClaim("name", 123)
-                    .withJWTId(ApiMethod)
-                    .build(); //Reusable verifier instance
-            DecodedJWT jwt = verifier.verify(token);
+        Algorithm algorithm = Algorithm.HMAC256("secret");
+        JWTVerifier verifier = JWT.require(algorithm).withIssuer("auth0").withClaim("name", 123).withJWTId(ApiMethod).build(); //Reusable verifier instance
+        DecodedJWT jwt = verifier.verify(token);
 
-            log.info(" DecodedJWT jwt = verifier.verify(token); end");
-            if (jwt == null) {
-                log.error("DecodedJWT jwt = verifier.verify(token); error");
-            } else {
-                b = true;
-                log.info("DecodedJWT jwt = verifier.verify(token); ok");
-            }
+        log.info(" DecodedJWT jwt = verifier.verify(token); end");
+        if (jwt == null) {
+            log.error("DecodedJWT jwt = verifier.verify(token); error");
+        } else {
+            b = true;
+            log.info("DecodedJWT jwt = verifier.verify(token); ok");
+        }
 
 
         return b;
@@ -270,21 +250,14 @@ public static class JwtVerifierBuilder{
         payloadClaims.put("@context", "https://auth0.com/");
 
         Algorithm algorithm = Algorithm.HMAC256("secret");
-        String token = JWT.create()
-                .withClaim("name", 123)
-                .withArrayClaim("array", new Integer[]{1, 2, 3})
-                .withPayload(payloadClaims)
-                .sign(algorithm);
+        String token = JWT.create().withClaim("name", 123).withArrayClaim("array", new Integer[]{1, 2, 3}).withPayload(payloadClaims).sign(algorithm);
 
         return token;
     }
 
     public static void verifyToken(String token, Boolean privateClaims) {
         Algorithm algorithm = Algorithm.HMAC256("secret");
-        JWTVerifier verifier = JWT.require(algorithm)
-                .withArrayClaim("array", 1, 2, 3)
-                .withClaim("name", 123)
-                .build();
+        JWTVerifier verifier = JWT.require(algorithm).withArrayClaim("array", 1, 2, 3).withClaim("name", 123).build();
         verifier.verify(token);
 
     }
@@ -330,6 +303,54 @@ public static class JwtVerifierBuilder{
 //            log.error("", jwtVerificationException);
 //        }
 //    }
+
+
+    public static String AesEncode(String source, String aesKey) throws Exception {
+        String[] splitStrings = source.split("\\.");
+        //
+        String sourcePayload = splitStrings[1];
+        //
+        byte[] bytes = new BASE64Decoder().decodeBuffer(sourcePayload);
+
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");//"算法/模式/补码方式"
+        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(aesKey.getBytes("utf-8"), "AES"));
+        byte[] encrypted = cipher.doFinal(bytes);
+//        log.info(new BASE64Encoder().encode(encrypted));
+        String encode = new BASE64Encoder().encode(encrypted);
+
+        String encodeReplace = encode.replace("\r\n", "");
+
+        String AesEncodeToken = splitStrings[0] + "." + encodeReplace + "." + splitStrings[2];
+        return AesEncodeToken;
+    }
+
+    public static String AesDecode(String source, String aesKey) throws Exception {
+        log.debug("加密后的token"+source);
+        String[] splitStrings = source.split("\\.");
+        log.debug("字符串分割 获得 String数组 ");
+        //
+        String sourcePayload = splitStrings[1];
+        log.debug("获得tokenPayload 第二部分（已加密） 该部分储存了敏感信息"+sourcePayload);
+        //
+        byte[] bytes = new BASE64Decoder().decodeBuffer(sourcePayload);
+        log.debug("tokenPayload base64解码，准备aes解码  ",bytes);
+        byte[] raw = aesKey.getBytes("utf-8");
+        log.debug("Aes解码开始 获得aeskey， byte[] 格式 ");
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        log.debug("获得 Cipher 实例 "+"：： transformation:AES/ECB/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(raw, "AES"));
+        log.debug("为Cipher实例配置解密模式，添加解密密钥");
+        byte[] original = cipher.doFinal(bytes);
+        log.debug("tokenPayload base64解密，获得解密后的byte数组");
+        String originals = new BASE64Encoder().encode(original).replace("\r\n","");
+        log.debug("byte数组转String 删除 转义字符");
+        //delete extra. to get more information ,read source code
+        String substring = originals.substring(0, originals.length()-2);
+        log.debug("去除解密token 尾部 2个base64字符");
+        int length1 = originals.length();
+//        log.info(new String(original, "utf-8"));
+        return splitStrings[0] + "." + substring + "." + splitStrings[2];
+    }
 
 
 }

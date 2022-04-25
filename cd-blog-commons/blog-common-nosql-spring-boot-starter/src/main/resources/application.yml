@@ -1,0 +1,6 @@
+server:
+  port: 88
+spring:
+  data:
+    mongodb:
+      uri: mongodb://192.168.1.11:27017/dev
