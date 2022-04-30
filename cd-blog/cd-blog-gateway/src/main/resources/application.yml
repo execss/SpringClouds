@@ -1,0 +1,10 @@
+server:
+  port: 899
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: auth
+          uri: http://127.0.0.1:8990/**
+          predicates:
+            - Path=/**

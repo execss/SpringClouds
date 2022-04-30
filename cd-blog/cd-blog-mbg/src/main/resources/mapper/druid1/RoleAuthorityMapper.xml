@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.byteinfo.blog.mbg.mapper.RoleAuthorityMapper">
+  <resultMap id="BaseResultMap" type="top.byteinfo.blog.mbg.entity.RoleAuthority">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="authority_id" jdbcType="INTEGER" property="authorityId" />
+    <result column="authority_type" jdbcType="VARCHAR" property="authorityType" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bl_role_authority
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="top.byteinfo.blog.mbg.entity.RoleAuthority">
+    insert into bl_role_authority (id, role_id, authority_id, 
+      authority_type, create_time, create_by
+      )
+    values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{authorityId,jdbcType=INTEGER}, 
+      #{authorityType,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{createBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.byteinfo.blog.mbg.entity.RoleAuthority">
+    update bl_role_authority
+    set role_id = #{roleId,jdbcType=INTEGER},
+      authority_id = #{authorityId,jdbcType=INTEGER},
+      authority_type = #{authorityType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, role_id, authority_id, authority_type, create_time, create_by
+    from bl_role_authority
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, role_id, authority_id, authority_type, create_time, create_by
+    from bl_role_authority
+  </select>
+</mapper>
