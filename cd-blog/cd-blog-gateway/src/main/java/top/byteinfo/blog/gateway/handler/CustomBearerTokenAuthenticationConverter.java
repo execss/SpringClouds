@@ -1,5 +1,6 @@
 package top.byteinfo.blog.gateway.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import java.util.regex.Pattern;
  * modified from ServerBearerTokenAuthenticationConverter
  * org.springframework.security.oauth2.server.resource.web.server.ServerBearerTokenAuthenticationConverter;
  */
+@Slf4j
 public class CustomBearerTokenAuthenticationConverter implements ServerAuthenticationConverter {
     private static final Pattern authorizationPattern = Pattern.compile("^Bearer (?<token>[a-zA-Z0-9-._~+/]+=*)$",
             Pattern.CASE_INSENSITIVE);
@@ -38,7 +40,11 @@ public class CustomBearerTokenAuthenticationConverter implements ServerAuthentic
 
         try {
             return request.getHeaders().getValuesAsList("Authorization").get(0).replace("Bearer", "").trim();
+        } catch (RuntimeException e) {
+            log.warn("to better", e);
+            return null;
         } catch (Exception e) {
+            log.error(" attention error", e);
             return null;
         }
 

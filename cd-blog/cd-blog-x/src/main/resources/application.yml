@@ -1,6 +1,10 @@
 server:
   port: 8990
 spring:
+  application:
+    name: cd-blog-x
+  profiles:
+    active: dev
   main:
     allow-bean-definition-overriding: true
 
@@ -9,7 +13,7 @@ spring:
       druid1:
         username: root
         password: root
-        url: jdbc:mysql://192.168.1.11/mogu_blog?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+        url: jdbc:mysql://192.168.1.11/cd_blog?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
         driver-class-name: com.mysql.cj.jdbc.Driver
         initial-size: 5
         min-idle: 5
@@ -52,6 +56,29 @@ spring:
           stat:
             merge-sql: true
             slow-sql-millis: 5000
+      druid3:
+        username: root
+        password: root
+        url: jdbc:mysql://192.168.1.11/blog?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        initial-size: 5
+        min-idle: 5
+        max-active: 20
+        max-wait: 60000
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 30000
+        max-evictable-idle-time-millis: 300000
+        validation-query: SELECT 1 FROM user
+        test-while-idle: true
+        test-on-borrow: true
+        test-on-return: false
+        pool-prepared-statements: true
+        max-pool-prepared-statement-per-connection-size: 20
+        filters: stat,wall,slf4j
+        filter:
+          stat:
+            merge-sql: true
+            slow-sql-millis: 5000
       web-stat-filter:
         enabled: true
         url-pattern: /*
@@ -67,50 +94,6 @@ spring:
         allow: 127.0.0.1
 
 
-  redis:
-    host: 192.168.1.11
-    port: 6379
-  rabbitmq:
-    host: 192.168.1.11
-    password: 5672
-    listener:
-      simple:
-        retry:
-          enabled: true
-          max-attempts: 3
-          initial-interval: 3000
-#  datasource:
-#    type: com.zaxxer.hikari.HikariDataSource
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://192.168.1.11/cd_blog?serverTimezone=Asia/Shanghai&allowMultiQueries=true
-#    username: root
-#    password: root
-#    hikari:
-#      minimum-idle: 5
-#      idle-timeout: 600000
-#      maximum-pool-size: 10
-#      auto-commit: true
-#      pool-name: cd-blogHikariCP
-#      max-lifetime: 1800000
-#      connection-timeout: 30000
-#      connection-test-query: SELECT 1
-  servlet:
-    multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
-  application:
-    name: blog
-
-mybatis:
-  mapper-locations: classpath*:mapper/*.xml
-
-jwt:
-  token-key: axilAShsdfjkgikasTDHJC
-  aes-key: Axqwn234qt89sdhc
-
-cd:
-  blog:
-    enable: true
 #logging:
 #  config: classpath:logback-spring.xml
 #  filepath: /log

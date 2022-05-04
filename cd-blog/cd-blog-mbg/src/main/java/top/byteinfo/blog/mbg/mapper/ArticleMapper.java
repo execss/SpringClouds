@@ -10,10 +10,8 @@ public interface ArticleMapper {
     int insert(Article record);
 
     Article selectByPrimaryKey(Integer id);
-
-    List<Article> selectAll();
-
-    int updateByPrimaryKey(Article record);
-
+    Article getHomeArticle();
+//    List<Article> selectAll();
     List<Article> getHomeArticles();
+    int updateByPrimaryKey(Article record);
 }

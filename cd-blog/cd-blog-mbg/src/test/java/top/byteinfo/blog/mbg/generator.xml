@@ -18,6 +18,7 @@
         <!--        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>-->
         <!--        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
         <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/><!--disable the XML merge function for generated mapper XML files.-->
+
         <plugin type="com.softwareloop.mybatis.generator.plugins.LombokPlugin">
             <property name="Data" value="true"/>
             <property name="builder" value="true"/>
@@ -58,7 +59,7 @@
         </javaModelGenerator>
 
         <!-- 生成mapxml文件 -->
-        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="mapper/druid1" targetProject="src/main/resources">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
@@ -68,10 +69,12 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
-
-        <table schema="cd_blog" tableName="bl_article">
-            <domainObjectRenamingRule searchString="^Bl" replaceString=""/>
-        </table>
+<table tableName="bl_article_tag">
+    <domainObjectRenamingRule searchString="^Bl" replaceString=""/>
+</table>
+<!--        <table schema="cd_blog" tableName="bl_">-->
+<!--            <domainObjectRenamingRule searchString="^Bl" replaceString=""/>-->
+<!--        </table>-->
 
 
 

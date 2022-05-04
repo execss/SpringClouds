@@ -27,6 +27,7 @@
         <module>blog-common-core</module>
         <module>blog-common-auth-client-spring-boot-starter</module>
         <module>blog-common-amqp-spring-boot-starter</module>
+        <module>blog-common-search-starter</module>
     </modules>
 
 

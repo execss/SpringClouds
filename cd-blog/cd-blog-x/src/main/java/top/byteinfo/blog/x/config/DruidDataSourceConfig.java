@@ -22,4 +22,10 @@ public class DruidDataSourceConfig {
     public DataSource second() {
         return DruidDataSourceBuilder.create().build();
     }
+
+    @Bean(name = "Druid3")
+    @ConfigurationProperties("spring.datasource.druid.druid3")
+    public DataSource third() {
+        return DruidDataSourceBuilder.create().build();
+    }
 }

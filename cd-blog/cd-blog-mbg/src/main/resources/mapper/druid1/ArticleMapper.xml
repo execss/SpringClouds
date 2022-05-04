@@ -35,10 +35,12 @@
     from bl_article
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+
+  <select id="getHomeArticle" resultMap="BaseResultMap">
     select id, user_auth_id, category_id, article_cover, article_title, article_content
-    from bl_article
+    from bl_article limit 1
   </select>
+
 <select id="getHomeArticles" resultMap="BaseResultMap">
   select id, user_auth_id, category_id, article_cover, article_title, article_content
   from bl_article limit 3
