@@ -22,17 +22,23 @@ public class BlogArticleApi {
 
     @ApiOperation("查看blog首页文章")
     @GetMapping("/article")
-    Result<?> getHomeArticles() {
-        List<ArticleVO> homeArticles = articleService.getHomeArticles();
+    Result<?> getHomeArticle() {
+        List<ArticleVO> homeArticles = articleService.getHomeArticle();
         return Result.ok("ok", homeArticles);
     }
 
-    @ApiOperation("查询推荐文章")
+    @ApiOperation("查看首页文章列表")
     @GetMapping("/articles")
-    Result<?> getRecommendArticles() {
-        return Result.ok("ok", articleService.getRecommendArticles());
+    Result<?> getHomeArticles() {
+        return Result.ok("ok",articleService.getHomeArticles());
     }
 
+
+    @GetMapping("/articles/getArticleHomeVoList")
+    Result<?> getArticleHomeDTOList(){
+        articleService.getArticleHomeDTOList();
+        return Result.ok("");
+    }
 //    @GetMapping("/articles")
 //    public Result<?> XlistArticles() {
 //        return Result.ok("ok",articleService.XlistArticles());

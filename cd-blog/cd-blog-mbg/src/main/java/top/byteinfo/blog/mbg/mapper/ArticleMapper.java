@@ -11,7 +11,9 @@ public interface ArticleMapper {
 
     Article selectByPrimaryKey(Integer id);
     Article getHomeArticle();
-//    List<Article> selectAll();
+    List<Article> getArticles();
+
+    //    List<Article> selectAll();
     List<Article> getHomeArticles();
     int updateByPrimaryKey(Article record);
 }

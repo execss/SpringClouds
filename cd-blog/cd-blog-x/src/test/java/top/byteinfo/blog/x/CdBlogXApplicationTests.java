@@ -13,7 +13,6 @@ import top.byteinfo.blog.mbg.mapper.TagMapper;
 import top.byteinfo.blog.x.model.vo.ArticleVO;
 import top.byteinfo.blog.x.model.vo.TagVO;
 import top.byteinfo.blog.x.util.BeanUtils;
-import top.byteinfo.mogu.blog.mbg.entity.TBlog;
 import top.byteinfo.mogu.blog.mbg.mapper.TBlogMapper;
 
 import javax.annotation.Resource;
@@ -134,16 +133,61 @@ class CdBlogXApplicationTests {
             return articleVO;
         }).collect(Collectors.toList());
         //TODO articleVOList和articleVOListUpdate竟然完全一样。为啥  某本流行的经典书籍上写有：Stream是没有储存的
-        log.info("\n"+Jackson.toString(articles)+"\n"+Jackson.toString(articleVOList)+"\n"+Jackson.toString(articleVOListUpdate));
+        log.info("\n" + Jackson.toString(articles) + "\n" + Jackson.toString(articleVOList) + "\n" + Jackson.toString(articleVOListUpdate));
 
     }
 
     @Test
-    void t1(){
-        List<TBlog> tBlogList = tBlogMapper.selectAll();
+    void t1() {
+        //原集合
+        List<ArticleVO> articleVOList = new ArrayList<>();
+        log.info(articleVOList.toString());
+        articleVOList.add(new ArticleVO());
+        log.info("\n" + articleVOList);
+        //集合转stream处理
+        List<ArticleVO> articleVOS = articleVOList.stream().map(articleVO -> {
+                    articleVO.setId(1);
+                    return articleVO;
+                }
+        ).collect(Collectors.toList());
+        //此时
+        log.info("\n" + articleVOList + "\n" + articleVOS);
 
     }
 
+    @Test
+    void test() {
+        List<Article> articleList = articleMapper.getArticles();
+        List<ArticleTag> articleTagList = articleTagMapper.getTagByArticleIds(articleList.stream().map(Article::getId).collect(Collectors.toList()));
+        List<Tag> tagList = tagMapper.getTagByTagIds(articleTagList.stream().map(articleTag -> articleTag.getTagId()).distinct().collect(Collectors.toList()));
+
+        List<ArticleVO> articleVOList1 = BeanUtils.copyList(articleList, ArticleVO.class).stream().peek(articleVO -> articleVO.setTagList(
+                tagList.stream()
+                        .filter(
+                                tag -> articleTagList.stream()
+                                        .filter(articleTag -> articleTag.getArticleId().equals(articleVO.getId()))
+                                        .map(ArticleTag::getTagId)
+                                        .collect(Collectors.toList())
+                                        .contains(tag.getId())
+                        )
+                        .map(tag -> new TagVO(tag.getId(), tag.getTagName())).collect(Collectors.toList())
+        )).collect(Collectors.toList());
+
+
+        List<ArticleVO> articleVOList = BeanUtils.copyList(articleList, ArticleVO.class).stream().peek(
+                articleVO -> articleVO.setTagList(
+                        tagList.stream().filter(
+                                        tag -> articleTagList.stream()
+                                                .filter(articleTag -> Objects.equals(articleVO.getId(), articleTag.getArticleId()))
+                                                .map(ArticleTag::getTagId)
+                                                .collect(Collectors.toList())
+                                                .contains(tag.getId()))
+                                .map(tag -> new TagVO(tag.getId(), tag.getTagName())).collect(Collectors.toList())
+                )
+        ).collect(Collectors.toList());
+
+        log.info("\n" + Jackson.toString(articleVOList1) + "\n" + Jackson.toString(articleVOList));
+    }
 
 
 }

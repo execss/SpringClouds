@@ -9,13 +9,15 @@ import top.byteinfo.blog.mbg.mapper.ArticleTagMapper;
 import top.byteinfo.blog.mbg.mapper.TagMapper;
 import top.byteinfo.blog.x.model.vo.ArticleVO;
 import top.byteinfo.blog.x.model.vo.TagVO;
-import top.byteinfo.blog.x.model.x.dto.ArticleHomeDTO;
 import top.byteinfo.blog.x.service.BlogArticleService;
 import top.byteinfo.blog.x.util.BeanUtils;
 import top.byteinfo.x.blog.mbg.mapper.TbArticleMapper;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,43 +32,18 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     @Resource
     TbArticleMapper tbArticleMapper;
 
-    public List<ArticleVO> getHomeArticles() {
+    public List<ArticleVO> getHomeArticle() {
         // 数据库查询 article
         Article homeArticle = articleMapper.getHomeArticle();
         //转换vo对象
         ArticleVO articleVO = BeanUtils.copyObject(homeArticle, ArticleVO.class);
-        // 从articleList拿到 articleIdList
-//        List<Integer> articleIdList = homeArticleList.stream().map(i -> i.getId()).collect(Collectors.toList());
 
-        // 根据articleIdList查询ArticleTagList 此对象关联Tag与Article
         List<ArticleTag> articleTagList = articleTagMapper.getTagByArticleId(homeArticle.getId());
 
         List<Integer> integerList = articleTagList.stream().map(
                 i -> i.getTagId()
         ).collect(Collectors.toList());
-//        List<List<ArticleTag>> articleTag = new ArrayList<>();
-//        for (Article article : homeArticleList) {
-//            List<ArticleTag> collect = articleTagByArticleIds.stream().map(
-//                    i -> {
-//                        if (i.getArticleId() == article.getId())
-//                        return i;
-//                        return null;
-//                    }
-//            ).collect(Collectors.toList());
-//
-//            articleTag.add(collect);
-//        }
-
-        List<Map> maplist = new ArrayList<>();
-
-//        List<Map<Integer, Integer>> collect1 = articleTag.stream().map(articleTagList -> {
-//            Map<Integer, Integer> collect = articleTagList.stream().collect(Collectors.toMap(ArticleTag::getArticleId, ArticleTag::getTagId));
-//            return collect;
-//        }).collect(Collectors.toList());
-
         List<Tag> tagByTagIds = tagMapper.getTagByTagIds(integerList);
-
-//        articleVOList.stream().map(i->i.setTagList());
         List<TagVO> tagVOList = BeanUtils.copyList(tagByTagIds, TagVO.class);
         articleVO.setTagList(tagVOList);
         List<ArticleVO> articleVOList = new ArrayList<>();
@@ -74,19 +51,19 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     }
 
     @Override
-    public List<ArticleVO> getRecommendArticles() {
+    public List<ArticleVO> getHomeArticles() {
         List<Article> articles = articleMapper.getHomeArticles();
         List<ArticleVO> articleVOList = BeanUtils.copyList(articles, ArticleVO.class);
-        List<Integer> integerList = articles.stream().map(i -> i.getId()).collect(Collectors.toList());
+        List<Integer> integerList = articles.stream().map(Article::getId).collect(Collectors.toList());
         List<ArticleTag> articleTagList = articleTagMapper.getTagByArticleIds(integerList);
 
-        Set<Integer> integerSet = articleTagList.stream().map(i -> i.getTagId()).collect(Collectors.toSet());
-        List<Tag> tagList = tagMapper.getTagByTagIds(integerSet.stream().collect(Collectors.toList()));
+        Set<Integer> integerSet = articleTagList.stream().map(ArticleTag::getTagId).collect(Collectors.toSet());
+        List<Tag> tagList = tagMapper.getTagByTagIds(new ArrayList<>(integerSet));
 
-        List<ArticleVO> articleVOListUpdate = articleVOList.stream().map(articleVO -> {
+        List<ArticleVO> articleVOListUpdate = articleVOList.stream().peek(articleVO -> {
             List<Integer> tagIdsByArticleId = articleTagList.stream()
-                    .filter(articleTag -> articleVO.getId() == articleTag.getArticleId())
-                    .map(articleTag -> articleTag.getTagId())
+                    .filter(articleTag -> Objects.equals(articleVO.getId(), articleTag.getArticleId()))
+                    .map(ArticleTag::getTagId)
                     .collect(Collectors.toList());
             List<Tag> tagsByArticleId = tagList.stream().filter(tag ->
                     tagIdsByArticleId.contains(tag.getId())
@@ -94,19 +71,30 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 
             List<TagVO> tagVOList = tagsByArticleId.stream().map(i -> new TagVO(i.getId(), i.getTagName())).collect(Collectors.toList());
             articleVO.setTagList(tagVOList);
-            return articleVO;
         }).collect(Collectors.toList());
-
-
-
         return articleVOListUpdate;
     }
 
-
-
     @Override
-    public List<ArticleHomeDTO> XlistArticles() {
-        tbArticleMapper.selectAll();
-        return null;
+    public List<ArticleVO> getArticleHomeDTOList() {
+        List<Article> articleList = articleMapper.getArticles();
+
+        List<Tag> tagList = tagMapper.getTagByTagIds(articleList.stream().map(Article::getId).distinct().collect(Collectors.toList()));
+
+        List<ArticleTag> articleTagList = articleTagMapper.getTagByArticleIds(articleList.stream().map(Article::getId).collect(Collectors.toList()));
+
+        return BeanUtils.copyList(articleList, ArticleVO.class).stream().peek(articleVO -> articleVO.setTagList(
+                tagList.stream()
+                        .filter(
+                                tag -> articleTagList.stream()
+                                        .filter(articleTag -> articleTag.getArticleId().equals(articleVO.getId()))
+                                        .map(ArticleTag::getTagId)
+                                        .collect(Collectors.toList())
+                                        .contains(tag.getId())
+                        )
+                        .map(tag -> new TagVO(tag.getId(), tag.getTagName())).collect(Collectors.toList())
+        )).collect(Collectors.toList());
+
+
     }
 }
