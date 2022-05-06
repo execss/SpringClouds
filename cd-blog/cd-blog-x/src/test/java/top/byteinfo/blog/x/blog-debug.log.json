@@ -1,0 +1,44 @@
+Starting CdBlogXApplicationTests using Java 1.8.0_322 on WIN-KI53RQV3COP with PID 23088 (started by Administrator in C:\Users\Administrator\IdeaProjects\SpringClouds\cd-blog\cd-blog-x)
+The following profiles are active: dev
+Started CdBlogXApplicationTests in 3.381 seconds (JVM running for 4.76)
+Starting CdBlogXApplicationTests using Java 1.8.0_322 on WIN-KI53RQV3COP with PID 11828 (started by Administrator in C:\Users\Administrator\IdeaProjects\SpringClouds\cd-blog\cd-blog-x)
+The following profiles are active: dev
+Started CdBlogXApplicationTests in 3.499 seconds (JVM running for 4.767)
+[]
+Starting CdBlogXApplicationTests using Java 1.8.0_322 on WIN-KI53RQV3COP with PID 22352 (started by Administrator in C:\Users\Administrator\IdeaProjects\SpringClouds\cd-blog\cd-blog-x)
+The following profiles are active: dev
+Started CdBlogXApplicationTests in 4.535 seconds (JVM running for 6.391)
+[]
+[{"id":1,"articleCover":"https://static.talkxj.com/articles/3dffb2fcbd541886616ab54c92570de3.jpg","articleTitle":"测试文章1","articleContent":"恭喜你成功运行博客，开启你的文章之旅吧。","createTime":null,"categoryId":1,"categoryName":"数据库","tagDTOList":[{"id":1,"tagName":"测试"},{"id":3,"tagName":"测试3"}]},{"id":2,"articleCover":"http:127.0.0.1/jpgs/jpg1","articleTitle":"测试文章2","articleContent":"test ok ，running successful。。。。\r\n恭喜你成功运行博客，开启你的文章之旅吧。","createTime":null,"categoryId":1,"categoryName":"数据库","tagDTOList":[{"id":1,"tagName":"测试"},{"id":2,"tagName":"测试2"},{"id":3,"tagName":"测试3"}]},{"id":3,"articleCover":"http:127.0.0.1/jpgs/jpg2","articleTitle":"测试文章3","articleContent":"test ok 。。。。。\r\ntest ok ，running successful。。。。\r\n恭喜你成功运行博客，开启你的文章之旅吧。","createTime":null,"categoryId":2,"categoryName":"自动装配","tagDTOList":[{"id":3,"tagName":"测试3"}]},{"id":4,"articleCover":"http:127.0.0.1/jpgs/jpg3","articleTitle":"测试文章4","articleContent":"successful\r\ntest ok 。。。。。\r\ntest ok ，running successful。。。。\r\n恭喜你成功运行博客，开启你的文章之旅吧。","createTime":null,"categoryId":2,"categoryName":"自动装配","tagDTOList":[]},{"id":5,"articleCover":"http:127.0.0.1/","articleTitle":"测试文章5","articleContent":" 测试文章内容","createTime":null,"categoryId":2,"categoryName":"自动装配","tagDTOList":[]}]
+Starting CdBlogXApplicationTests using Java 1.8.0_322 on WIN-KI53RQV3COP with PID 10188 (started by Administrator in C:\Users\Administrator\IdeaProjects\SpringClouds\cd-blog\cd-blog-x)
+The following profiles are active: dev
+Started CdBlogXApplicationTests in 3.295 seconds (JVM running for 4.483)
+Starting CdBlogXApplicationTests using Java 1.8.0_322 on WIN-KI53RQV3COP with PID 22780 (started by Administrator in C:\Users\Administrator\IdeaProjects\SpringClouds\cd-blog\cd-blog-x)
+The following profiles are active: dev
+Started CdBlogXApplicationTests in 3.287 seconds (JVM running for 4.495)
+Starting CdBlogXApplicationTests using Java 1.8.0_322 on WIN-KI53RQV3COP with PID 10992 (started by Administrator in C:\Users\Administrator\IdeaProjects\SpringClouds\cd-blog\cd-blog-x)
+The following profiles are active: dev
+Started CdBlogXApplicationTests in 3.407 seconds (JVM running for 4.562)
+[{"id":1,"articleCover":null,"articleTitle":"测试文章1","categoryId":1,"categoryName":"数据库","tagDTOList":[{"id":1,"tagName":"测试"},{"id":3,"tagName":"测试3"}]},{"id":2,"articleCover":null,"articleTitle":"测试文章2","categoryId":1,"categoryName":"数据库","tagDTOList":[{"id":1,"tagName":"测试"},{"id":2,"tagName":"测试2"},{"id":3,"tagName":"测试3"}]},{"id":3,"articleCover":null,"articleTitle":"测试文章3","categoryId":1,"categoryName":"数据库","tagDTOList":[{"id":1,"tagName":"测试"},{"id":2,"tagName":"测试2"}]}]
+Starting CdBlogXApplicationTests using Java 1.8.0_322 on WIN-KI53RQV3COP with PID 10404 (started by Administrator in C:\Users\Administrator\IdeaProjects\SpringClouds\cd-blog\cd-blog-x)
+The following profiles are active: dev
+Started CdBlogXApplicationTests in 3.45 seconds (JVM running for 4.984)
+Starting CdBlogXApplicationTests using Java 1.8.0_322 on WIN-KI53RQV3COP with PID 21352 (started by Administrator in C:\Users\Administrator\IdeaProjects\SpringClouds\cd-blog\cd-blog-x)
+The following profiles are active: dev
+Started CdBlogXApplicationTests in 3.254 seconds (JVM running for 4.362)
+Starting CdBlogXApplicationTests using Java 1.8.0_322 on WIN-KI53RQV3COP with PID 7904 (started by Administrator in C:\Users\Administrator\IdeaProjects\SpringClouds\cd-blog\cd-blog-x)
+The following profiles are active: dev
+Started CdBlogXApplicationTests in 3.313 seconds (JVM running for 4.444)
+Starting CdBlogXApplicationTests using Java 1.8.0_322 on WIN-KI53RQV3COP with PID 16848 (started by Administrator in C:\Users\Administrator\IdeaProjects\SpringClouds\cd-blog\cd-blog-x)
+The following profiles are active: dev
+Started CdBlogXApplicationTests in 3.246 seconds (JVM running for 4.341)
+Starting CdBlogXApplicationTests using Java 1.8.0_322 on WIN-KI53RQV3COP with PID 14684 (started by Administrator in C:\Users\Administrator\IdeaProjects\SpringClouds\cd-blog\cd-blog-x)
+The following profiles are active: dev
+Started CdBlogXApplicationTests in 3.156 seconds (JVM running for 4.206)
+[{"id":1,"articleCover":null,"articleTitle":"测试文章1","categoryId":1,"categoryName":"数据库","tagDTOList":[{"id":1,"tagName":"测试"},{"id":3,"tagName":"测试3"}]},{"id":2,"articleCover":null,"articleTitle":"测试文章2","categoryId":1,"categoryName":"数据库","tagDTOList":[{"id":1,"tagName":"测试"},{"id":2,"tagName":"测试2"},{"id":3,"tagName":"测试3"}]},{"id":3,"articleCover":null,"articleTitle":"测试文章3","categoryId":1,"categoryName":"数据库","tagDTOList":[{"id":1,"tagName":"测试"},{"id":2,"tagName":"测试2"}]}]
+[]
+Starting CdBlogXApplicationTests using Java 1.8.0_322 on WIN-KI53RQV3COP with PID 16308 (started by Administrator in C:\Users\Administrator\IdeaProjects\SpringClouds\cd-blog\cd-blog-x)
+The following profiles are active: dev
+Started CdBlogXApplicationTests in 3.844 seconds (JVM running for 5.77)
+[{"id":1,"articleCover":null,"articleTitle":"测试文章1","categoryId":1,"categoryName":"数据库","tagDTOList":[{"id":1,"tagName":"测试"},{"id":3,"tagName":"测试3"}]},{"id":2,"articleCover":null,"articleTitle":"测试文章2","categoryId":1,"categoryName":"数据库","tagDTOList":[{"id":1,"tagName":"测试"},{"id":2,"tagName":"测试2"},{"id":3,"tagName":"测试3"}]},{"id":3,"articleCover":null,"articleTitle":"测试文章3","categoryId":1,"categoryName":"数据库","tagDTOList":[{"id":1,"tagName":"测试"},{"id":2,"tagName":"测试2"}]}]
+[{"id":4,"articleCover":null,"articleTitle":"测试文章4","categoryId":2,"categoryName":"自动装配","tagDTOList":[{"id":1,"tagName":"测试"},{"id":2,"tagName":"测试2"},{"id":3,"tagName":"测试3"}]},{"id":5,"articleCover":null,"articleTitle":"测试文章5","categoryId":2,"categoryName":"自动装配","tagDTOList":[{"id":3,"tagName":"测试3"}]}]

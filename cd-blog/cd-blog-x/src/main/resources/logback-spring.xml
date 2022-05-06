@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <contextName>${NAME}</contextName>
+    <springProperty name="NAME" scope="context" source="spring.application.name" defaultValue="demo"/>
+    <springProperty name="LOG_FILE_PATH" scope="context" source="logging.filePath" defaultValue="/logs/${NAME}"/>
+    <springProperty name="LOG_POINT_FILE_PATH" scope="context" source="logging.filePath" defaultValue="/logs/point"/>
+    <springProperty name="LOG_FILE_SIZE_MAX" scope="context" source="logging.fileSize.max" defaultValue="100MB"/>
+    <springProperty name="LOG_FILE_EXPIRE_TIME" scope="context" source="logging.fileExpire" defaultValue="31"/>
+    <springProperty name="SERVER_IP" scope="context" source="server.ip" defaultValue="127.0.0.1"/>
+    <springProperty name="SERVER_PORT" scope="context" source="server.port" defaultValue="8080"/>
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
+
+    <property name="CONSOLE_LOG_PATTERN"
+              value="
+[${NAME}:${SERVER_IP}:${SERVER_PORT}]
+[%clr(%X{traceid}){yellow},%clr(%X{X-B3-TraceId}){yellow}]
+%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint}
+%clr(%level){blue}
+%clr(${PID}){magenta}
+%clr([%thread]){orange}
+%clr(%logger){cyan}
+%m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+    />
+
+    <property name="CONSOLE_LOG_PATTERN_NO_COLOR"
+              value="
+[${NAME}:${SERVER_IP}:${SERVER_PORT}]
+[%X{traceid},%X{X-B3-TraceId}]
+%d{yyyy-MM-dd HH:mm:ss.SSS}
+%level ${PID} [%thread]
+%logger
+%m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+    />
+
+    <property name="CONSOLE_LOG_PATTERN_NO_COLOR_JSON"
+              value="
+
+%m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+    />
+    <!-- 控制台日志 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>true</withJansi>
+        <encoder>
+
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+    </appender>
+
+
+    <!-- 按照每天生成常规日志文件 -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_PATH}/${NAME}-info.log</file>
+        <!-- 基于时间的分包策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_PATH}/${NAME}-info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <!--保留时间,单位:天-->
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN_NO_COLOR}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 按照每天生成常规日志文件 -->
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_PATH}/${NAME}-warn.log</file>
+        <!-- 基于时间的分包策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_PATH}/${NAME}-warn.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <!--保留时间,单位:天-->
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN_NO_COLOR}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <!-- 按照每天生成常规日志文件 -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_PATH}/${NAME}-error.log</file>
+        <!-- 基于时间的分包策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_PATH}/${NAME}-error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <!--保留时间,单位:天-->
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN_NO_COLOR}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <!-- 按照每天生成常规日志文件 -->
+<!--    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <file>${LOG_FILE_PATH}/${NAME}-debug.log</file>-->
+<!--        &lt;!&ndash; 基于时间的分包策略 &ndash;&gt;-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>${LOG_FILE_PATH}/${NAME}-debug.%d{yyyy-MM-dd}.%i.log</fileNamePattern>-->
+<!--            <maxFileSize>100MB</maxFileSize>-->
+<!--            &lt;!&ndash;保留时间,单位:天&ndash;&gt;-->
+<!--            <maxHistory>10</maxHistory>-->
+<!--        </rollingPolicy>-->
+<!--        <encoder>-->
+<!--            <pattern>${CONSOLE_LOG_PATTERN_NO_COLOR}</pattern>-->
+<!--            <charset>UTF-8</charset>-->
+<!--        </encoder>-->
+<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+<!--            <level>DEBUG</level>-->
+<!--            <onMatch>ACCEPT</onMatch>-->
+<!--            <onMismatch>DENY</onMismatch>-->
+<!--        </filter>-->
+<!--    </appender>-->
+
+    <!-- 按照每天生成常规日志文件 -->
+    <appender name="Test" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>C:\Users\Administrator\IdeaProjects\SpringClouds\cd-blog\cd-blog-x\src\test\java\top\byteinfo\blog\x/${NAME}-debug.log.json</file>
+        <!-- 基于时间的分包策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_PATH}/${NAME}-debug.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <!--保留时间,单位:天-->
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN_NO_COLOR_JSON}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+<!--    <appender name="framework" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <file>${base_log_dir}/framework.log</file>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>${base_log_dir}/framework/framework-%d{yyyy-MM-dd}.%i.log</fileNamePattern>-->
+<!--            <maxHistory>15</maxHistory>-->
+<!--            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+<!--                <maxFileSize>50MB</maxFileSize>-->
+<!--            </timeBasedFileNamingAndTriggeringPolicy>-->
+<!--        </rollingPolicy>-->
+<!--        <encoder>-->
+<!--            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} %msg%n</pattern>-->
+<!--            <charset>UTF-8</charset>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+<!--        <appender-ref ref="DEBUG"/>-->
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="WARN"/>
+        <appender-ref ref="ERROR"/>
+    </root>
+
+    <!-- spring框架日志 -->
+<!--    <logger name="org.springframework" level="debug" additivity="false">-->
+<!--        <appender-ref ref="DEBUG"/>-->
+<!--    </logger>-->
+
+    <!--特别指定该目录下为debug模式-->
+<!--    <logger name="com.example" level="debug" additivity="false">-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--        <appender-ref ref="DEBUG"/>-->
+<!--        <appender-ref ref="INFO"/>-->
+<!--        <appender-ref ref="WARN"/>-->
+<!--        <appender-ref ref="ERROR"/>-->
+<!--    </logger>-->
+
+    <!--开发环境:打印控制台-->
+    <springProfile name="dev">
+        <logger name="top.byteinfo" level="INFO">
+<!--            <appender-ref ref="STDOUT"/>-->
+            <appender-ref ref="Test"/>
+        </logger>
+        <logger name="org.springframework" level="debug" additivity="false">
+<!--            <appender-ref ref="STDOUT"/>-->
+<!--            <appender-ref ref="DEBUG"/>-->
+        </logger>
+    </springProfile>
+
+
+
+
+</configuration>

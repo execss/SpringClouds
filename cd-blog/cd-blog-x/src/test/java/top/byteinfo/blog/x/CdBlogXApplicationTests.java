@@ -10,6 +10,8 @@ import top.byteinfo.blog.mbg.entity.Tag;
 import top.byteinfo.blog.mbg.mapper.ArticleMapper;
 import top.byteinfo.blog.mbg.mapper.ArticleTagMapper;
 import top.byteinfo.blog.mbg.mapper.TagMapper;
+import top.byteinfo.blog.x.dao.druid1.ArticleDao;
+import top.byteinfo.blog.x.dao.druid3.TBArticleDao;
 import top.byteinfo.blog.x.model.vo.ArticleVO;
 import top.byteinfo.blog.x.model.vo.TagVO;
 import top.byteinfo.blog.x.util.BeanUtils;
@@ -189,5 +191,21 @@ class CdBlogXApplicationTests {
         log.info("\n" + Jackson.toString(articleVOList1) + "\n" + Jackson.toString(articleVOList));
     }
 
+    @Resource
+    TBArticleDao tBArticleDao;
+    @Resource
+    ArticleDao articleDao;
+    @Test
+    void BlogT1(){
+//        List<ArticleHomeDTO> articleHomeDTOList = TBArticleDao.listArticles( 1, 3);
+//        log.info(Jackson.toString(articleHomeDTOList));
+//        List<ArticleHomeVO> articleHomeList = articleDao.getArticleHomeList(1, 3);
+//        log.info(Jackson.toString(articleHomeList));
+
+//        ConditionVO conditionVO = ConditionVO.builder().categoryId(1).tagId(1).build();
+//        tBArticleDao.listArticlesByCondition(1L,5L,conditionVO);
+        log.info(Jackson.toString(articleDao.getPreviewArticleList(1,1)));
+        log.info(Jackson.toString(articleDao.getPreviewArticleList(3,2)));
+    }
 
 }

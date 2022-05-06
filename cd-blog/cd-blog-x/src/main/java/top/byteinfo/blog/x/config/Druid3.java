@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "top.byteinfo.x.blog.mbg.mapper", sqlSessionTemplateRef = "druid3SqlSessionTemplate")
+@MapperScan(basePackages = {"top.byteinfo.blog.x.dao.druid3","top.byteinfo.x.blog.mbg.mapper"}, sqlSessionTemplateRef = "druid3SqlSessionTemplate")
 public class Druid3 {
 
     @Primary
@@ -23,7 +24,10 @@ public class Druid3 {
 
         SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
         sessionFactoryBean.setDataSource(dataSource);
-        sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/druid3/*Mapper.xml"));
+        PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver = new PathMatchingResourcePatternResolver();
+        Resource[] resources = pathMatchingResourcePatternResolver.getResources("classpath*:mapper/druid3/*.xml");
+
+        sessionFactoryBean.setMapperLocations(resources);
         return sessionFactoryBean.getObject();
     }
 

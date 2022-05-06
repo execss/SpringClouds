@@ -11,7 +11,6 @@ import top.byteinfo.blog.x.model.vo.ArticleVO;
 import top.byteinfo.blog.x.model.vo.TagVO;
 import top.byteinfo.blog.x.service.BlogArticleService;
 import top.byteinfo.blog.x.util.BeanUtils;
-import top.byteinfo.x.blog.mbg.mapper.TbArticleMapper;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -29,8 +28,8 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     @Resource
     private ArticleTagMapper articleTagMapper;
 
-    @Resource
-    TbArticleMapper tbArticleMapper;
+//    @Resource
+//    TbArticleMapper tbArticleMapper;
 
     public List<ArticleVO> getHomeArticle() {
         // 数据库查询 article
@@ -94,7 +93,6 @@ public class BlogArticleServiceImpl implements BlogArticleService {
                         )
                         .map(tag -> new TagVO(tag.getId(), tag.getTagName())).collect(Collectors.toList())
         )).collect(Collectors.toList());
-
 
     }
 }

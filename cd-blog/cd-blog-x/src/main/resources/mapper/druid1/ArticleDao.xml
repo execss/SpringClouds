@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.byteinfo.blog.x.dao.druid1.ArticleDao">
+    <resultMap id="articleHomeResultMap" type="top.byteinfo.blog.x.model.vo.ArticleHomeVO">
+        <id column="id" property="id"/>
+        <result column="article_cover" property="articleCover"/>
+        <result column="article_title" property="articleTitle"/>
+        <result column="article_content" property="articleContent"/>
+        <result column="create_time" property="createTime"/>
+
+        <result column="category_id" property="categoryId"/>
+        <result column="category_name" property="categoryName"/>
+        <collection property="tagDTOList" ofType="top.byteinfo.blog.x.model.x.dto.TagDTO">
+            <id column="tag_id" property="id"/>
+            <result column="tag_name" property="tagName"/>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="PreviewArticleMap" type="top.byteinfo.blog.x.model.dto.ArticlePreDTO">
+        <id column="id" property="id"/>
+        <result column="article_cover" property="articleCover"/>
+        <result column="article_title" property="articleTitle"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="category_name" property="categoryName"/>
+        <collection property="tagDTOList" ofType="top.byteinfo.blog.x.model.x.dto.TagDTO">
+            <id column="tag_id" property="id"/>
+            <result column="tag_name" property="tagName"/>
+        </collection>
+    </resultMap>
+    <select id="getArticleHomeList" resultMap="articleHomeResultMap">
+        SELECT bla.id,
+               bla.category_id,
+               bla.article_cover,
+               bla.article_title,
+               bla.article_content,
+               blc.id,
+               blc.category_name,
+               blat.article_id,
+               blat.tag_id,
+               blt.tag_name,
+               bla.id
+        FROM bl_article bla
+                 JOIN bl_category blc on bla.category_id = blc.id
+                 LEFT JOIN bl_article_tag blat ON bla.id = blat.article_id
+                 LEFT JOIN bl_tag blt on blt.id = blat.tag_id
+        ORDER BY bla.id,
+                 tag_id
+        ;
+    </select>
+
+    <select id="getPreviewArticleList" parameterType="integer" resultMap="PreviewArticleMap">
+        select
+        a.id,
+        article_title,
+        a.category_id,
+        blc.category_name,
+        blat.tag_id as tag_id,
+        blt.id,
+        blt.tag_name
+        FROM
+            (
+        SELECT
+        id,
+        article_cover,
+        article_title,
+        article_content,
+        category_id
+        FROM
+        bl_article bla
+        <where>
+            <if test="categoryId != null">
+                category_id = #{categoryId}
+            </if>
+
+            <if test="tagId != null">
+               AND id IN
+                (
+                select
+                article_id
+                from
+                bl_article_tag
+                WHERE
+                tag_id = #{tagId}
+                )
+            </if>
+        </where>
+        ) a
+        JOIN bl_category blc ON a.category_id = blc.id
+        JOIN bl_article_tag blat ON a.id = blat.article_id
+        JOIN bl_tag blt ON blt.id = blat.tag_id
+    </select>
+</mapper>
