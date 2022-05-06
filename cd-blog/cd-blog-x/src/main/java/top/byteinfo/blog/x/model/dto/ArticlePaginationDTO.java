@@ -1,29 +1,35 @@
-package top.byteinfo.blog.x.model.vo;
+package top.byteinfo.blog.x.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+/**
+ * 文章上下篇
+ *
+ * @author yezhiqiu
+ * @date 2021/07/28
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ArticleVO {
+public class ArticlePaginationDTO {
+
+    /**
+     * id
+     */
     private Integer id;
 
-    private Integer userAuthId;
-
-    private Integer categoryId;
-
+    /**
+     * 文章缩略图
+     */
     private String articleCover;
 
+    /**
+     * 标题
+     */
     private String articleTitle;
 
-    private String articleContent;
-
-    private String categoryName;
-
-    private List<TagVO> tagVOList;
 }

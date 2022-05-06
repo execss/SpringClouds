@@ -59,7 +59,7 @@
         blt.id,
         blt.tag_name
         FROM
-            (
+        (
         SELECT
         id,
         article_cover,
@@ -74,7 +74,7 @@
             </if>
 
             <if test="tagId != null">
-               AND id IN
+                AND id IN
                 (
                 select
                 article_id

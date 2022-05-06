@@ -131,7 +131,7 @@ class CdBlogXApplicationTests {
             ).collect(Collectors.toList());
 
             List<TagVO> tagVOList = tagsByArticleId.stream().map(i -> new TagVO(i.getId(), i.getTagName())).collect(Collectors.toList());
-            articleVO.setTagList(tagVOList);
+            articleVO.setTagVOList(tagVOList);
             return articleVO;
         }).collect(Collectors.toList());
         //TODO articleVOList和articleVOListUpdate竟然完全一样。为啥  某本流行的经典书籍上写有：Stream是没有储存的
@@ -163,7 +163,7 @@ class CdBlogXApplicationTests {
         List<ArticleTag> articleTagList = articleTagMapper.getTagByArticleIds(articleList.stream().map(Article::getId).collect(Collectors.toList()));
         List<Tag> tagList = tagMapper.getTagByTagIds(articleTagList.stream().map(articleTag -> articleTag.getTagId()).distinct().collect(Collectors.toList()));
 
-        List<ArticleVO> articleVOList1 = BeanUtils.copyList(articleList, ArticleVO.class).stream().peek(articleVO -> articleVO.setTagList(
+        List<ArticleVO> articleVOList1 = BeanUtils.copyList(articleList, ArticleVO.class).stream().peek(articleVO -> articleVO.setTagVOList(
                 tagList.stream()
                         .filter(
                                 tag -> articleTagList.stream()
@@ -177,7 +177,7 @@ class CdBlogXApplicationTests {
 
 
         List<ArticleVO> articleVOList = BeanUtils.copyList(articleList, ArticleVO.class).stream().peek(
-                articleVO -> articleVO.setTagList(
+                articleVO -> articleVO.setTagVOList(
                         tagList.stream().filter(
                                         tag -> articleTagList.stream()
                                                 .filter(articleTag -> Objects.equals(articleVO.getId(), articleTag.getArticleId()))

@@ -44,7 +44,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
         ).collect(Collectors.toList());
         List<Tag> tagByTagIds = tagMapper.getTagByTagIds(integerList);
         List<TagVO> tagVOList = BeanUtils.copyList(tagByTagIds, TagVO.class);
-        articleVO.setTagList(tagVOList);
+        articleVO.setTagVOList(tagVOList);
         List<ArticleVO> articleVOList = new ArrayList<>();
         return articleVOList;
     }
@@ -69,7 +69,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
             ).collect(Collectors.toList());
 
             List<TagVO> tagVOList = tagsByArticleId.stream().map(i -> new TagVO(i.getId(), i.getTagName())).collect(Collectors.toList());
-            articleVO.setTagList(tagVOList);
+            articleVO.setTagVOList(tagVOList);
         }).collect(Collectors.toList());
         return articleVOListUpdate;
     }
@@ -77,12 +77,9 @@ public class BlogArticleServiceImpl implements BlogArticleService {
     @Override
     public List<ArticleVO> getArticleHomeDTOList() {
         List<Article> articleList = articleMapper.getArticles();
-
         List<Tag> tagList = tagMapper.getTagByTagIds(articleList.stream().map(Article::getId).distinct().collect(Collectors.toList()));
-
         List<ArticleTag> articleTagList = articleTagMapper.getTagByArticleIds(articleList.stream().map(Article::getId).collect(Collectors.toList()));
-
-        return BeanUtils.copyList(articleList, ArticleVO.class).stream().peek(articleVO -> articleVO.setTagList(
+        return BeanUtils.copyList(articleList, ArticleVO.class).stream().peek(articleVO -> articleVO.setTagVOList(
                 tagList.stream()
                         .filter(
                                 tag -> articleTagList.stream()
