@@ -11,10 +11,10 @@
         <artifactId>cd-blog</artifactId>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <artifactId>blog-common-log-spring-boot-starter</artifactId>
+    <artifactId>blog-common-log-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>blog-common-log-spring-boot-starter</name>
-    <description>blog-common-log-spring-boot-starter</description>
+    <name>blog-common-log-starter</name>
+    <description>blog-common-log-starter</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>

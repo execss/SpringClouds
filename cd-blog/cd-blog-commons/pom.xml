@@ -19,14 +19,14 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>blog-common-redis-spring-boot-starter</module>
-        <module>blog-common-nosql-spring-boot-starter</module>
-        <module>blog-common-mail-spring-boot-starter</module>
-        <module>blog-common-log-spring-boot-starter</module>
-        <module>blog-common-db-spring-boot-starter</module>
+        <module>blog-common-redis-starter</module>
+        <module>blog-common-nosql-starter</module>
+        <module>blog-common-mail-starter</module>
+        <module>blog-common-log-starter</module>
+        <module>blog-common-db-starter</module>
         <module>blog-common-core</module>
-        <module>blog-common-auth-client-spring-boot-starter</module>
-        <module>blog-common-amqp-spring-boot-starter</module>
+        <module>blog-common-auth-client-starter</module>
+        <module>blog-common-amqp-starter</module>
         <module>blog-common-search-starter</module>
     </modules>
 

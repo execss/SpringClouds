@@ -12,10 +12,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>top.byteinfo</groupId>
-    <artifactId>blog-common-redis-spring-boot-starter</artifactId>
+    <artifactId>blog-common-redis-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>blog-common-redis-spring-boot-starter</name>
-    <description>blog-common-redis-spring-boot-starter</description>
+    <name>blog-common-redis-starter</name>
+    <description>blog-common-redis-starter</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>

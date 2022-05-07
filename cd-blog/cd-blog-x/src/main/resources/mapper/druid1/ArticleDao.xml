@@ -7,7 +7,6 @@
         <result column="article_title" property="articleTitle"/>
         <result column="article_content" property="articleContent"/>
         <result column="create_time" property="createTime"/>
-
         <result column="category_id" property="categoryId"/>
         <result column="category_name" property="categoryName"/>
         <collection property="tagDTOList" ofType="top.byteinfo.blog.x.model.x.dto.TagDTO">

@@ -3,28 +3,39 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>top.byteinfo</groupId>
-        <version>0.0.1-SNAPSHOT</version>
-        <artifactId>cd-blog</artifactId>
 <!--        <groupId>org.springframework.boot</groupId>-->
 <!--        <artifactId>spring-boot-starter-parent</artifactId>-->
 <!--        <version>2.6.7</version>-->
+        <groupId>top.byteinfo</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+        <artifactId>cd-blog</artifactId>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>top.byteinfo</groupId>
-    <artifactId>blog-common-auth-client-spring-boot-starter</artifactId>
+    <artifactId>blog-common-nosql-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>blog-common-auth-client-spring-boot-starter</name>
-    <description>blog-common-auth-client-spring-boot-starter</description>
+    <name>blog-common-nosql-starter</name>
+    <description>blog-common-nosql-starter</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>top.byteinfo</groupId>
+            <artifactId>cd-blog-mbg</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>top.byteinfo</groupId>
+            <artifactId>blog-common-core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
 
     </dependencies>
 

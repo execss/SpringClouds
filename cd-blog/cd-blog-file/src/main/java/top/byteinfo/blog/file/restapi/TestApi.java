@@ -1,4 +1,4 @@
-package top.byteinfo.blog.file.restApi;
+package top.byteinfo.blog.file.restapi;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
@@ -13,6 +13,10 @@ import top.byteinfo.blog.common.core.model.result.Result;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -32,7 +36,10 @@ public class TestApi {
 
     @PostMapping("/upload")
     Result<?> TestUploadFile(@RequestBody MultipartFile file) throws IOException {
-        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+        List<String> stringList = Files.lines(Paths.get("C:\\Intel\\AccessKey.csv"))
+                .map(s -> s.split(",")[1])
+                .collect(Collectors.toList());
+        OSS ossClient = new OSSClientBuilder().build(endpoint, stringList.get(0), stringList.get(1));
 
         InputStream inputStream = file.getInputStream();
         String contentType = file.getContentType();
@@ -45,8 +52,8 @@ public class TestApi {
             found = ossClient.doesObjectExist(bucketName, OSSKey + originalFilename);
             ossClient.shutdown();
         } catch (Exception e) {
-            log.error("OSS",e);
-        }finally {
+            log.error("OSS", e);
+        } finally {
             if (ossClient != null) {
                 ossClient.shutdown();
             }
