@@ -8,13 +8,18 @@ import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import top.byteinfo.blog.file.config.OssConfig;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Slf4j
 @SpringBootTest
 class CdBlogFileApplicationTests {
@@ -33,7 +38,7 @@ class CdBlogFileApplicationTests {
 
 
     @Test
-    void TestAliYunOSSUPString() throws Exception{
+    void TestAliYunOSSUPString() throws Exception {
         // endpoint是访问OSS的域名。如果您已经在OSS的控制台上 创建了Bucket，请在控制台上查看域名。
         // 如果您还没有创建Bucket，endpoint选择请参看文档中心的“开发人员指南 > 基本概念 > 访问域名”，
         // 链接地址是：https://help.aliyun.com/document_detail/oss/user_guide/oss_concept/endpoint.html?spm=5176.docoss/user_guide/endpoint_region
@@ -55,8 +60,8 @@ class CdBlogFileApplicationTests {
                 .collect(Collectors.toList());
 
         String[] strings = stringList.get(1).split(",");
-        log.info("\n"+stringList.get(0) +"\n"+ stringList.get(1));
-        log.info("\n"+strings[0]+"\n"+strings[1]);
+        log.info("\n" + stringList.get(0) + "\n" + stringList.get(1));
+        log.info("\n" + strings[0] + "\n" + strings[1]);
         OSS ossClient = new OSSClientBuilder().build(endpoint, strings[0], strings[1]);
 
 
@@ -150,13 +155,26 @@ class CdBlogFileApplicationTests {
 
     }
 
+    @Autowired
+    OssConfig ossConfig;
+
     @Test
-    void csvIO() throws FileNotFoundException {
-        File file= new File("C:\\Intel\\AccessKey.csv");
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-     bufferedReader.lines().forEach(System.out::println);
+    void csvIO()  {
 
+        String objectName = "MultipartFile/" + "name.pdf";
 
+        try (
+                BufferedInputStream bufferedInputStream =
+                        new BufferedInputStream(
+                                Files.newInputStream(new File("C:\\Intel\\name.pdf").toPath())
+                        );
+        ) {
+            OSS ossClient = new OSSClientBuilder().build(ossConfig.getEndpoint(), ossConfig.getAccessKeyId(), ossConfig.getAccessKeySecret());
+            PutObjectRequest putObjectRequest = new PutObjectRequest(ossConfig.getBucketName(), objectName, bufferedInputStream);
+            ossClient.putObject(putObjectRequest);
+        }catch (Exception e){
+            throw new RuntimeException();
+        }
 
 
     }

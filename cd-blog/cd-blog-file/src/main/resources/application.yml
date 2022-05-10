@@ -1,2 +1,22 @@
 server:
   port: 8991
+
+spring:
+  application:
+    name: fileService
+  cloud:
+    nacos:
+      server-addr: 192.168.1.11:8848
+  redis:
+    host: 192.168.1.11
+    port: 6379
+  main:
+      allow-bean-definition-overriding: true
+
+oss:
+  ali:
+    url: http://Bucket域名/
+    endpoint: endpoint
+    accessKeyId: accessKeyId
+    accessKeySecret: accessKeySecret
+    bucketName: OSS配置bucketName
