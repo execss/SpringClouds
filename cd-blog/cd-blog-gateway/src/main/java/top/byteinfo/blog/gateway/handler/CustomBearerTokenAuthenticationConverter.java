@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.server.resource.web.server.ServerBearerTokenAuthenticationConverter;
 import org.springframework.security.web.server.authentication.ServerAuthenticationConverter;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -12,8 +13,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * modified from ServerBearerTokenAuthenticationConverter
- * org.springframework.security.oauth2.server.resource.web.server.ServerBearerTokenAuthenticationConverter;
+ *  code refactoring form {@link ServerBearerTokenAuthenticationConverter}
+ *
+ *
  */
 @Slf4j
 public class CustomBearerTokenAuthenticationConverter implements ServerAuthenticationConverter {

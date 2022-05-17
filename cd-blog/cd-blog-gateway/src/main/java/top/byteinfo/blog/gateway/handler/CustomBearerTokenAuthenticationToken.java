@@ -1,13 +1,15 @@
 package top.byteinfo.blog.gateway.handler;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken;
 import org.springframework.util.Assert;
 
 import java.util.Collections;
 
 /**
- * modified from BearerTokenAuthenticationToken
- * org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken;
+ * code refactoring form {@link BearerTokenAuthenticationToken}
+ *
+ *
  */
 public class CustomBearerTokenAuthenticationToken extends AbstractAuthenticationToken {
 
