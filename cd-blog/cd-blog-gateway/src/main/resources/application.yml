@@ -5,6 +5,24 @@ spring:
     gateway:
       routes:
         - id: auth
-          uri: http://127.0.0.1:8990/**
+          uri: http://127.0.0.1:8166/**
           predicates:
-            - Path=/**
+            - Path=/api-uaa/validata/code/**
+        - id: auth
+          uri: http://127.0.0.1:8166/**
+          predicates:
+            - Path=/api-uaa/oauth/token/**
+
+        - id: origin
+          uri: http://127.0.0.1:9900/**
+          predicates:
+            - Path=/api-user/users/current
+        - id: origin
+          uri: http://127.0.0.1:9900/**
+          predicates:
+            - Path=/api-user/menus/current
+        - id: origin
+          uri: http://127.0.0.1:9900/**
+          predicates:
+            - Path=/api-log/requestStat
+

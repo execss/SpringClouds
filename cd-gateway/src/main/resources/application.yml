@@ -4,9 +4,25 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: auth
-          uri: http://127.0.0.1:8990/**
+        - id: auth0
+          uri: http://127.0.0.1:8166/**
           predicates:
-            - Path=/**
+            - Path=/api-uaa/validata/code/**
+        - id: auth1
+          uri: http://127.0.0.1:8166/**
+          predicates:
+            - Path=/api-uaa/oauth/token/**
+        - id: origin0
+          uri: http://127.0.0.1:9900/**
+          predicates:
+            - Path=/api-user/users/current/**
+        - id: origin1
+          uri: http://127.0.0.1:9900/**
+          predicates:
+            - Path=/api-user/menus/current/**
+        - id: origin2
+          uri: http://127.0.0.1:9900/**
+          predicates:
+            - Path=/api-log/requestStat/**
 
 

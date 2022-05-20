@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-parent</artifactId>-->
-<!--        <version>2.6.7</version>-->
+        <!--        <groupId>org.springframework.boot</groupId>-->
+        <!--        <artifactId>spring-boot-starter-parent</artifactId>-->
+        <!--        <version>2.6.7</version>-->
         <groupId>top.byteinfo</groupId>
         <version>0.0.1-SNAPSHOT</version>
         <artifactId>cd-blog</artifactId>
@@ -44,6 +44,10 @@
             <groupId>top.byteinfo</groupId>
             <artifactId>blog-common-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>top.byteinfo</groupId>
+            <artifactId>blog-common-redis-starter</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -55,14 +59,18 @@
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
         </dependency>
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.swagger/swagger-core &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>io.swagger</groupId>-->
-<!--            <artifactId>swagger-core</artifactId>-->
-<!--            <version>1.6.6</version>-->
-<!--        </dependency>-->
-
-                <dependency>
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.swagger/swagger-core &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.swagger</groupId>-->
+        <!--            <artifactId>swagger-core</artifactId>-->
+        <!--            <version>1.6.6</version>-->
+        <!--        </dependency>-->
+        <!-- 验证码生成工具 -->
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <version>2.0.9</version>

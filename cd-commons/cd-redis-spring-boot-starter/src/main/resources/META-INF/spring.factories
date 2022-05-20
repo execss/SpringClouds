@@ -1,3 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-top.byteinfo.common.redis.config.RedisAutoConfigure,\
-top.byteinfo.common.redis.template.RedisRepository
+top.byteinfo.common.redis.RedisAutoConfigure

@@ -15,6 +15,7 @@
         <module>cd-blog-mbg</module>
         <module>cd-blog-gateway</module>
         <module>cd-blog-file</module>
+        <module>cd-blog-search</module>
     </modules>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -79,7 +80,12 @@
                 <artifactId>blog-common-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>top.byteinfo</groupId>
+                <artifactId>blog-common-redis-starter</artifactId>
+                <version>${project.version}</version>
 
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>

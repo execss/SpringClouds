@@ -3,6 +3,7 @@ package top.byteinfo.blog.x;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import top.byteinfo.blog.common.core.util.Jackson;
 import top.byteinfo.blog.mbg.entity.Article;
 import top.byteinfo.blog.mbg.entity.ArticleTag;
@@ -42,16 +43,19 @@ class CdBlogXApplicationTests {
 
     @Test
     void contextLoads() {
-//        blogMapper.selectAll();
-        String[] ss = {"s", "ss"};
+        String admin = new BCryptPasswordEncoder().encode("admin");
+        log.info(admin);
 
-        List<String> stringList = Arrays.asList(ss);
-        System.out.println(stringList);
-//        stringList.add("sss");
-        List<String> collect = Arrays.stream(ss).collect(Collectors.toList());
-        collect.add("sss");
-        System.out.println(collect);
-        ArrayList<String> strings = new ArrayList<>(Arrays.asList(ss));
+//        blogMapper.selectAll();
+//        String[] ss = {"s", "ss"};
+//
+//        List<String> stringList = Arrays.asList(ss);
+//        System.out.println(stringList);
+////        stringList.add("sss");
+//        List<String> collect = Arrays.stream(ss).collect(Collectors.toList());
+//        collect.add("sss");
+//        System.out.println(collect);
+//        ArrayList<String> strings = new ArrayList<>(Arrays.asList(ss));
 
     }
 
